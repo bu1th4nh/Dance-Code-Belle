@@ -2,17 +2,25 @@
 
 ## Offline verification
 
-- 21 unit tests pass on Python 3.12 in the development environment.
+- 36 tests pass on Python 3.12 in the development environment, including the
+  Streamlit interface and its background worker.
 - Tests cover golden packet examples, catalog bounds and namespace mixing,
   notification decoding, timeout without retransmission, completion arriving
   during a write, malformed messages, bounded event storage, movement opt-in,
   keep-alive failures, stop cancellation and disconnect after cleanup failure.
 - A fake Bleak client checks characteristic selection, notification callback
   conversion, writes without response and rejection of unrelated devices.
+- Streamlit AppTest verifies offline defaults, grid previews, connection
+  persistence across reruns, direct grid sending, stop availability, routine
+  opt-in, and explicit selection before physical connection.
+- Worker tests check thread/loop affinity, prevention of overlapping playback,
+  completion timeouts without retries, device ownership, disconnect after
+  keep-alive failure, and stopping when browser activity expires.
 - All 421 audio and 454 high-level catalog entries were compared against source
   enum order and duration tables during development.
 - Packaging and installed command examples are checked locally. The GitHub Actions
-  workflow checks Python 3.10–3.14; see the repository's Actions tab for each run.
+  workflow installs the interface extra and checks Python 3.10–3.14; see the
+  repository's Actions tab for each run.
 
 ## First hardware milestone
 

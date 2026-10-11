@@ -75,6 +75,48 @@ asyncio.run(main())
 The mock records writes and only sends simulated notifications when `emit()` is
 called. It does not invent acknowledgements or claim hardware success.
 
+## Streamlit button-grid controller
+
+From a local checkout, install the optional interface and start it:
+
+```sh
+python -m pip install ".[ui]"
+python -m streamlit run streamlit_app.py
+```
+
+Open the local address printed by Streamlit (normally `http://127.0.0.1:8501`).
+The app starts in offline mock mode, disconnected. Click **Connect** to try it.
+
+- Search and page through the audio or high-level routine catalogs in a button grid.
+- Click a grid button to preview its exact bytes, then **Send selected**.
+- Enable **Send when a grid button is clicked** for direct button playback.
+- High-level routine transmission additionally requires the movement checkbox.
+- Use **Stop**, **Disconnect**, volume controls, and input queries.
+- See timestamped sent packets and replies, and download the recent transcript.
+
+For hardware, select **Bluetooth · physical Belle**, scan, select your device
+(or enter its address), and click **Connect**. This enters remote mode and
+maintains its keep-alive. Bluetooth runs on the computer hosting Streamlit, so
+run this app locally beside Belle. A cloud-hosted app cannot use your laptop's
+Bluetooth adapter through this interface. The supplied configuration binds the
+server to `127.0.0.1`.
+
+One persistent background event loop handles the connection across Streamlit
+reruns. Playback waits for completion without blocking the page, and a second
+playback is rejected while one is active. After an unconfirmed playback, stop
+commands are attempted and another playback stays blocked until **Stop** is
+pressed. Two app sessions cannot claim the same device address at once.
+
+The page updates every second while active. After 75 seconds without page
+updates, the worker attempts to stop, exit remote mode, and disconnect. Closing
+the tab therefore does not imply an immediate stop; use **Disconnect** first.
+A heavily throttled background browser tab may also expire. Keep the active
+control page visible during playback.
+
+The interface's mock transport clearly labels its simulated replies. Physical
+pairing and playback are still unverified. The app exposes the library's existing
+commands; dedicated forward/backward/turn presets are not implemented yet.
+
 ## Connect to physical Belle
 
 Install Bluetooth support, turn on Belle, and scan:

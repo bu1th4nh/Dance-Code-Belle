@@ -20,6 +20,11 @@ class Belle:
         self.notifications: asyncio.Queue[p.Notification] = asyncio.Queue(maxsize=128)
         self.malformed_notifications = 0
 
+    @property
+    def connection_error(self) -> Exception | None:
+        """The most recent keep-alive failure, if any."""
+        return self._health_error
+
     async def __aenter__(self):
         await self.connect()
         return self
