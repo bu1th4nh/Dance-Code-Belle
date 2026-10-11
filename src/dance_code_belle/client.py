@@ -127,6 +127,9 @@ class Belle:
         try:
             await self._send(packet)
             return await asyncio.wait_for(future, timeout)
+        except asyncio.TimeoutError as exc:
+            # Before Python 3.11 asyncio used a distinct TimeoutError class.
+            raise TimeoutError("Playback completion was not confirmed before timeout") from exc
         finally:
             self._waiters.remove(waiter)
             if not future.done():

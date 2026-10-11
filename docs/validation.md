@@ -11,8 +11,8 @@
   conversion, writes without response and rejection of unrelated devices.
 - All 421 audio and 454 high-level catalog entries were compared against source
   enum order and duration tables during development.
-- Packaging and installed command examples are checked locally. A GitHub Actions
-  workflow is provided for Python 3.10–3.14; those remote runs are not yet claimed.
+- Packaging and installed command examples are checked locally. The GitHub Actions
+  workflow checks Python 3.10–3.14; see the repository's Actions tab for each run.
 
 ## First hardware milestone
 
